@@ -40,45 +40,17 @@ print("My MAC addr:", [hex(i) for i in wifi.radio.mac_address])
 print("My IP address is", wifi.radio.ipv4_address)
 
 pool = socketpool.SocketPool(wifi.radio)
-requests = adafruit_requests.Session(pool, ssl.create_default_context())
-
+sslContext = ssl.create_default_context()
+requests = adafruit_requests.Session(pool, sslContext)
 
 while True:
-    try:
-        #  pings openweather
-        response = requests.get(url)
-        #  packs the response into a JSON
-        response_as_json = response.json()
-        print()
-        #  prints the entire JSON
-        print(response_as_json)
-        #  gets location name
-        place = response_as_json['name']
-        #  gets weather type (clouds, sun, etc)
-        weather = response_as_json['weather'][0]['main']
-        #  gets humidity %
-        humidity = response_as_json['main']['humidity']
-        #  gets air pressure in hPa
-        pressure = response_as_json['main']['pressure']
-        #  gets temp in kelvin
-        temperature = response_as_json['main']['temp']
-        #  converts temp from kelvin to C
-        converted_temp = (temperature - 273.15)
-
-        #  prints out weather data formatted nicely as pulled from JSON
-        print()
-        print("The current weather in %s is:" % place)
-        print(weather)
-        print("%s°F" % converted_temp)
-        print("%s%% Humidity" % humidity)
-        print("%s hPa" % pressure)
-        #  delay for 5 minutes
-        time.sleep(300)
-    # pylint: disable=broad-except
-    except Exception as e:
-        print("Error:\n", str(e))
-        print("Resetting microcontroller in 10 seconds")
-        time.sleep(20)
+    #  pings openweather
+    response = requests.get("http://192.168.0.17:8000/?name=John")
+    #  packs the response into a JSON
+    response_as_json = response.json()
+    print()
+    #  prints the entire JSON
+    print(response_as_json)
 
     led.value = True
     time.sleep(0.1)
@@ -88,3 +60,5 @@ while True:
     print("Current:\t\t{} mA".format(sensor.current))
     print("Power:\t\t\t{} W".format(sensor.power))
     print("\n\r")
+
+    time.sleep(20)
