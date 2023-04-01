@@ -1,0 +1,23 @@
+{
+  "name": "solarhub",
+  "version": "1.0.0",
+  "description": "Hobby project using CircuitPython to monitor &amp; control an outdoor solar power system",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Timmoth/SolarHub.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Timmoth/SolarHub/issues"
+  },
+  "homepage": "https://github.com/Timmoth/SolarHub#readme",
+  "dependencies": {
+    "@influxdata/influxdb-client": "^1.33.2"
+  }
+}
