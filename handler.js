@@ -7,7 +7,7 @@ const bucket = process.env.bucket
 const token = process.env.token;
 const url = process.env.url
 
-module.exports.helloWorld = async (event, context, callback) => {
+module.exports.power = async (event, context, callback) => {
 
   //parse the expected JSON from the body of the POST request
   var body = JSON.parse(event.body)
@@ -16,9 +16,9 @@ module.exports.helloWorld = async (event, context, callback) => {
   const writeApi = await new InfluxDB({ url, token }).getWriteApi(org, bucket);
 
   //create a data point with health as the measurement name, a field value for heart beat, and userID tag
-  const dataPoint = new Point('health')
-    .tag('userID', body['userID'])
-    .floatField('heartRate', body['heartbeatRate'])
+  const dataPoint = new Point('power')
+    .tag('deviceId', body['deviceId'])
+    .floatField('power', body['power'])
 
   //write data point
   await writeApi.writePoint(dataPoint)

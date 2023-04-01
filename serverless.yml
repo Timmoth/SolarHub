@@ -18,11 +18,11 @@ provider:
 
 # The `functions` block defines what code to deploy
 functions:
-  helloWorld:
-    handler: handler.helloWorld
+  power:
+    handler: handler.power
     # The `events` block defines how to trigger the handler.helloWorld code
     events:
       - http:
-          path: hello-world
+          path: power
           method: post
           cors: true
