@@ -9,26 +9,20 @@ const url = process.env.url
 
 module.exports.power = async (event, context, callback) => {
 
-  //parse the expected JSON from the body of the POST request
   var body = JSON.parse(event.body)
 
-  //create InfluxDB api client with URL and token, then create Write API for the specific org and bucket
   const writeApi = await new InfluxDB({ url, token }).getWriteApi(org, bucket);
 
-  //create a data point with health as the measurement name, a field value for heart beat, and userID tag
   const dataPoint = new Point('power')
     .tag('deviceId', body['deviceId'])
     .floatField('power', body['power'])
 
-  //write data point
   await writeApi.writePoint(dataPoint)
 
-  //close write API
   await writeApi.close().then(() => {
     console.log('WRITE FINISHED')
   })
 
-  //send back response to the client
   const response = {
     statusCode: 200,
     body: JSON.stringify('Write successful'),
