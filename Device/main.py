@@ -23,15 +23,18 @@ wifi_ssid = os.getenv('CIRCUITPY_WIFI_SSID')
 wifi_password = os.getenv('CIRCUITPY_WIFI_PASSWORD')
 
 
-def Flash():
-    led.value = True
-    time.sleep(0.5)
-    led.value = False
-    time.sleep(0.5)
+def Flash(duration: float, flashes: int):
+    for x in range(flashes):
+        led.value = True
+        time.sleep(duration)
+        led.value = False
+        time.sleep(duration)
 
 
 try:
-    Flash()
+    time.sleep(2)
+
+    Flash(0.5, 1)
 
     print(f'Connecting to WiFi: {wifi_ssid}')
 
@@ -41,8 +44,8 @@ try:
     sslContext = ssl.create_default_context()
     requests = adafruit_requests.Session(pool, sslContext)
 
-    Flash()
-    Flash()
+    Flash(0.5, 2)
+
     print(f'Connected.')
 
     print("Taking load sensor readings.")
@@ -61,22 +64,21 @@ try:
         url, json={
             'deviceId': 0,
             'loadPower': loadSensor.power,
+            'loadCurrent': loadSensor.current,
             'solarPower': solarPanelSensor.power,
-            'solarVoltage': solarPanelSensor.vol,
-            'solarCurrent': solarPanelSensor.vol,
+            'solarVoltage': solarPanelSensor.shunt_voltage,
+            'solarCurrent': solarPanelSensor.current,
         })
 
     print(f"Response: '{response.status_code}'.")
 
     if (response.status_code >= 200 and response.status_code < 300):
-        Flash()
-        Flash()
-        Flash()
+        Flash(0.5, 3)
 
 except Exception as e:
     print(f"An exception occurred {e}")
 
 print("Sleep.")
-time_alarm = alarm.time.TimeAlarm(monotonic_time=time.monotonic() + 480)
+time_alarm = alarm.time.TimeAlarm(monotonic_time=time.monotonic() + 240)
 # Exit the program, and then deep sleep until the alarm wakes us.
 alarm.exit_and_deep_sleep_until_alarms(time_alarm)
