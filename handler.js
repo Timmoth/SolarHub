@@ -15,7 +15,11 @@ module.exports.power = async (event, context, callback) => {
 
   const dataPoint = new Point('power')
     .tag('deviceId', body['deviceId'])
-    .floatField('power', body['power'])
+    .floatField('loadPower', body['loadPower'])
+    .floatField('solarPower', body['solarPower'])
+    .floatField('solarVoltage', body['solarVoltage'])
+    .floatField('solarCurrent', body['solarCurrent'])
+
 
   await writeApi.writePoint(dataPoint)
 

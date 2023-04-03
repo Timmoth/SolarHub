@@ -11,8 +11,9 @@ import ssl
 import microcontroller
 import alarm
 
-i2c = busio.I2C(board.GP5, board.GP4)
-sensor = INA219.INA219(i2c)
+i2c0 = busio.I2C(board.GP5, board.GP4)
+loadSensor = INA219.INA219(i2c0, 64)
+solarPanelSensor = INA219.INA219(i2c0, 65)
 
 led = digitalio.DigitalInOut(board.LED)
 led.direction = digitalio.Direction.OUTPUT
@@ -44,18 +45,25 @@ try:
     Flash()
     print(f'Connected.')
 
-    print("Taking sensor readings.")
+    print("Taking load sensor readings.")
+    print("Voltage:\t\t{} V".format(loadSensor.shunt_voltage))
+    print("Current:\t\t{} mA".format(loadSensor.current))
+    print("Power:\t\t\t{} W".format(loadSensor.power))
 
-    print("Voltage:\t\t{} V".format(sensor.bus_voltage))
-    print("Current:\t\t{} mA".format(sensor.current))
-    print("Power:\t\t\t{} W".format(sensor.power))
+    print("Taking solar sensor readings.")
+    print("Voltage:\t\t{} V".format(solarPanelSensor.shunt_voltage))
+    print("Current:\t\t{} mA".format(solarPanelSensor.current))
+    print("Power:\t\t\t{} W".format(solarPanelSensor.power))
 
     print("Posting sensor readings.")
 
     response = requests.post(
         url, json={
             'deviceId': 0,
-            'power': sensor.power,
+            'loadPower': loadSensor.power,
+            'solarPower': solarPanelSensor.power,
+            'solarVoltage': solarPanelSensor.vol,
+            'solarCurrent': solarPanelSensor.vol,
         })
 
     print(f"Response: '{response.status_code}'.")
