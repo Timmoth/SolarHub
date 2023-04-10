@@ -36,5 +36,5 @@ functions:
     environment:
       bucket: power
       org: SolarHub
-      token: ${ssm:/weatherstation-influxdb-token}
-      url: ${ssm:/weatherstation-influxdb-url}
+      token: ${ssm:/solarhub-influxdb-token}
+      url: ${ssm:/solarhub-influxdb-url}
