@@ -34,7 +34,7 @@ functions:
           method: post
           cors: true
     environment:
-      bucket: power
+      bucket: Power
       org: SolarHub
       token: ${ssm:/solarhub-influxdb-token}
       url: ${ssm:/solarhub-influxdb-url}
