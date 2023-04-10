@@ -32,8 +32,7 @@ def Flash(duration: float, flashes: int):
 
 
 try:
-    time.sleep(2)
-
+    time.sleep(1)
     Flash(0.5, 1)
 
     print(f'Connecting to WiFi: {wifi_ssid}')
@@ -44,6 +43,7 @@ try:
     sslContext = ssl.create_default_context()
     requests = adafruit_requests.Session(pool, sslContext)
 
+    time.sleep(1)
     Flash(0.5, 2)
 
     print(f'Connected.')
@@ -73,10 +73,13 @@ try:
     print(f"Response: '{response.status_code}'.")
 
     if (response.status_code >= 200 and response.status_code < 300):
+        time.sleep(1)
         Flash(0.5, 3)
 
 except Exception as e:
+    Flash(5, 1)
     print(f"An exception occurred {e}")
+
 
 print("Sleep.")
 time_alarm = alarm.time.TimeAlarm(monotonic_time=time.monotonic() + 240)

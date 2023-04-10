@@ -4,7 +4,7 @@
   "description": "Hobby project using CircuitPython to monitor &amp; control an outdoor solar power system",
   "main": "handler.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "compile": "tsc"
   },
   "repository": {
     "type": "git",
@@ -18,6 +18,12 @@
   },
   "homepage": "https://github.com/Timmoth/SolarHub#readme",
   "dependencies": {
-    "@influxdata/influxdb-client": "^1.33.2"
+    "@influxdata/influxdb-client": "^1.33.2",
+    "aws-sdk": "^2.1353.0"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.114",
+    "@types/node": "^18.15.11",
+    "typescript": "^5.0.4"
   }
 }

@@ -7,7 +7,7 @@
 # The `service` block is the name of the service
 service: server
 
-frameworkVersion: '3'
+frameworkVersion: "3"
 
 # The `provider` block defines where your service will be deployed
 provider:
@@ -15,12 +15,10 @@ provider:
   runtime: nodejs12.x
   region: eu-west-1
 
-
 # The `functions` block defines what code to deploy
 functions:
   power:
-    handler: handler.power
-    # The `events` block defines how to trigger the handler.helloWorld code
+    handler: build/handler.power
     events:
       - http:
           path: power
