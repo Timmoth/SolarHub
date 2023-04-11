@@ -24,6 +24,18 @@ provider:
       Resource:
         - "*"
 
+custom:
+  serverless-offline-ssm:
+    stages:
+      - local
+    ssm:
+      "/solarhub-influxdb-token": "test-token"
+      "/solarhub-influxdb-url": "http://influxDb:8086/"
+
+plugins:
+  - serverless-offline-ssm
+  - serverless-offline
+
 # The `functions` block defines what code to deploy
 functions:
   power:
